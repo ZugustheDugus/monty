@@ -1,6 +1,11 @@
 #ifndef MONTY_H
 #define MONTY_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -16,7 +21,6 @@ typedef struct stack_s
         struct stack_s *prev;
         struct stack_s *next;
 } stack_t;
-
 /**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
@@ -31,20 +35,13 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stddef.h>
-#include <string.h>
-#include <ctype.h>
-
-int collect_data(char *filename);
-void *find_op(char *possible_op, stack_t **, unsigned int)
-void op_pall(stack_t **stack, unsigned int line_number);
-void op_pint(stack_t **stack, unsigned int line_number);
-void op_pop(stack_t **stack, unsigned int line_number);
-void op_swap(stack_t **stack, unsigned int line_number);
-void op_add(stack_t **stack, unsigned int line_number);
-void op_push(stack_t **stack, unsigned int line_number);
-stack_t **stack_builder(int value, int max_lines);
+void push(stack_t **s, unsigned int line_number);
+void pall(stack_t **s, unsigned int line_number);
+void pop(stack_t **n, unsigned int line_number);
+void pint(stack_t **ss, unsigned int line_number);
+void execOp(char (*array)[80]);
+void add(stack_t **s, unsigned int line_number);
+void nop(stack_t **s, unsigned int line_number);
+void swap(stack_t **s, unsigned int line_number);
 
 #endif
