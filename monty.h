@@ -43,5 +43,6 @@ void execOp(char (*array)[80]);
 void add(stack_t **s, unsigned int line_number);
 void nop(stack_t **s, unsigned int line_number);
 void swap(stack_t **s, unsigned int line_number);
+void free_list(stack_t *s);
 
 #endif
