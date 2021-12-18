@@ -1,9 +1,8 @@
 #include "monty.h"
 /**
- *
- *
- *
- *
+ * op_pall - prints the entire stack
+ * @head: The head of the stack
+ * @i: unused indexer
  */
 void op_pall(stack_t **head, __attribute__((unused))unsigned int i)
 {
@@ -18,10 +17,9 @@ void op_pall(stack_t **head, __attribute__((unused))unsigned int i)
 }
 
 /**
- *
- *
- *
- *
+ * op_pint - prints an integer
+ * @head: head of the stack
+ * @i: Line number integer
  */
 void op_pint(stack_t **head, unsigned int i)
 {
@@ -34,9 +32,9 @@ void op_pint(stack_t **head, unsigned int i)
 }
 
 /**
- *
- *
- *
+ * op_pop - displays the stack
+ * @head: The head of the stack
+ * @i: Line number
  */
 void op_pop(stack_t **head, unsigned int i)
 {
@@ -53,9 +51,9 @@ void op_pop(stack_t **head, unsigned int i)
 }
 
 /**
- *
- *
- *
+ * op_swap - Swaps two stack elements
+ * @head: the head of the stack
+ * @i: Line number
  */
 void op_swap(stack_t **head, unsigned int i)
 {
@@ -80,9 +78,9 @@ void op_swap(stack_t **head, unsigned int i)
 }
 
 /**
- *
- *
- *
+ * op_add - adds two stack elements
+ * @head: The head of the stack
+ * @i: Line number
  */
 void op_add(stack_t **head, unsigned int i)
 {

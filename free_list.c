@@ -1,9 +1,8 @@
 #include "monty.h"
 
 /**
- *
- *
- *
+ * free_list - frees the memory in the stack
+ * @head: The head of the stack
  */
 
 void free_list(stack_t **head)
