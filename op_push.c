@@ -5,37 +5,36 @@
  * @str: The string pushed to stack
  * @i: Value given
  */
-void op_push(stack_t **head, char *str, unsigned int i)
+void op_push(stack_t **head, unsigned int i)
 {
-	stack_t *new;
-	int num;
+	stack_t *newn = malloc(sizeof(stack_t));
+	int x = atoi(arg);
 
-	if (strcmp(str, "0") == 0)
-		num = 0;
-	else
+	if (!newn)
 	{
-		num = atoi(str);
-		if (num == 0)
+		free(newn);
+		fprintf(stderr, "Error: malloc failed\n");
+		arg = "error";
+		return;
+	}
+	while (*arg)
+	{
+		if (*arg == '-')
+			arg++;
+		if (isdigit(*arg) == 0)
 		{
 			fprintf(stderr, "L%d: usage: push integer\n", i);
-			if (head != NULL)
-				free_list(head), free(head);
-			else
-				free(head);
-			exit(EXIT_FAILURE);
+			arg = "error";
+			free(newn);
+			return;
 		}
+		arg++;
 	}
-	new = malloc(sizeof(stack_t));
-	if (!new)
-	{
-		fprintf(stderr, "Error, malloc failed\n");
-		free_list(head), free(head), exit(EXIT_FAILURE);
-	}
-	new->n = num;
-	new->prev = NULL;
-	if (head != NULL)
-		new->next = *head;
-	else
-		new->next = NULL;
-	*head = new;
+	newn->n = x;
+	newn->next = NULL;
+	newn->prev = *head;
+	if (*head)
+		(*head)->next = newn;
+	*head = newn;
+	return;
 }

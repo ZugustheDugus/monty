@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 		else if (strcmp(op[0], "push") == 0)
 		{
 			if (op[1] != NULL)
-				op_push(head, op[1], i);
+				op_push(head, i);
 			else
 			{
 				if (head != NULL)

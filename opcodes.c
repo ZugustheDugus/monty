@@ -8,11 +8,14 @@ void op_pall(stack_t **head, __attribute__((unused))unsigned int i)
 {
 	stack_t *tmp;
 
-	tmp = *head;
-	while (tmp != NULL)
+	if (head)
 	{
-		printf("%d\n", tmp->n);
-		tmp = tmp->next;
+		tmp = *head;
+		while (tmp)
+		{
+			printf("%d/n", tmp->n);
+			tmp = tmp->prev;
+		}
 	}
 }
 
@@ -23,12 +26,20 @@ void op_pall(stack_t **head, __attribute__((unused))unsigned int i)
  */
 void op_pint(stack_t **head, unsigned int i)
 {
-	if (*head == NULL)
+	stack_t *tmp;
+
+	tmp = *head;
+	if (tmp)
+	{
+		printf("%d\n", tmp->n);
+		return;
+	}
+	else
 	{
 		fprintf(stderr, "L%d: can't pint, stack empty\n", i);
-		exit(EXIT_FAILURE);
+		arg = "error";
+		return;
 	}
-	printf("%d\n", (*head)->n);
 }
 
 /**
@@ -38,16 +49,21 @@ void op_pint(stack_t **head, unsigned int i)
  */
 void op_pop(stack_t **head, unsigned int i)
 {
-	stack_t *tmp;
+	stack_t *tmp = NULL;
 
-	if (*head == NULL)
+	if (!*head)
 	{
 		fprintf(stderr, "L%d: can't pop an empty stack\n", i);
-		exit(EXIT_FAILURE);
+		arg = "error";
+		return;
 	}
-	tmp = (*head)->next;
+	tmp = (*head)->prev;
 	free(*head);
 	*head = tmp;
+	if (!*head)
+		return;
+	(*head)->next = NULL;
+return;
 }
 
 /**
@@ -58,23 +74,29 @@ void op_pop(stack_t **head, unsigned int i)
 void op_swap(stack_t **head, unsigned int i)
 {
 	stack_t *tmp;
-	int swap;
+	int swap, y;
 
-	if (*head == NULL)
+	if (!*head)
 	{
 		fprintf(stderr, "L%d: can't swap, stack too short\n", i);
-		exit(EXIT_FAILURE);
+		arg = "error";
+		return;
 	}
-	tmp = (*head)->next;
-	if (tmp == NULL)
+	tmp = *head;
+	swap = tmp->n;
+	tmp = tmp->prev;
+	if (!tmp)
 	{
 		fprintf(stderr, "L%d: can't swap, stack too short\n", i);
-		exit(EXIT_FAILURE);
+		arg = "error";
+		return;
 	}
 
-	swap = (*head)->n;
-	(*head)->n = tmp->n;
+	y = tmp->n;
 	tmp->n = swap;
+	tmp = tmp->next;
+	tmp->n = y;
+return;
 }
 
 /**
@@ -84,27 +106,29 @@ void op_swap(stack_t **head, unsigned int i)
  */
 void op_add(stack_t **head, unsigned int i)
 {
-	int a, b, sum;
+	int a, b;
 	stack_t *tmp;
 
 	if (*head == NULL)
 	{
 		fprintf(stderr, "L%d: can't add, stack too short\n", i);
-		exit(EXIT_FAILURE);
+		arg = "error";
+		return;
 	}
-	tmp = (*head)->next;
-	if (tmp == NULL)
+	tmp = *head;
+	a = tmp->n;
+	tmp = tmp->prev;
+	if (!tmp)
 	{
 		fprintf(stderr, "L%d: can't add, stack too short\n", i);
-		exit(EXIT_FAILURE);
+		arg = "error";
+		return;
 	}
 
-	a = (*head)->n;
 	b = tmp->n;
-	sum = a + b;
-
-	tmp->n = sum;
-	tmp->prev = NULL;
-	free(*head);
+	tmp->n = (a + b);
 	*head = tmp;
+	tmp = tmp->next;
+	free(tmp);
+return;
 }
