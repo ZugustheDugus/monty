@@ -1,8 +1,6 @@
 #ifndef MONTY_H
 #define MONTY_H
 
-#define  _POSIX_C_SOURCE 200809L
-#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,9 +37,6 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_num);
 } instruction_t;
 
-extern char *arg;
-char *arg;
-
 void free_list(stack_t **head);
 void (*get_op(char *s))(stack_t **head, unsigned int line_num);
 void op_pall(stack_t **head, __attribute__((unused))unsigned int i);
@@ -49,7 +44,7 @@ void op_pint(stack_t **head, unsigned int i);
 void op_pop(stack_t **head, unsigned int i);
 void op_swap(stack_t **head, unsigned int i);
 void op_add(stack_t **head, unsigned int i);
-void op_push(stack_t **head, unsigned int i);
+void op_push(stack_t **head, char *str, unsigned int i);
 void nop(stack_t **stack, unsigned int line_number);
 char **tokenize(char *str);
 
