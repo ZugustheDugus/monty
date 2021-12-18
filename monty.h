@@ -45,6 +45,7 @@ void op_pop(stack_t **head, unsigned int i);
 void op_swap(stack_t **head, unsigned int i);
 void op_add(stack_t **head, unsigned int i);
 void op_push(stack_t **head, char *str, unsigned int i);
+void nop(stack_t **stack, unsigned int line_number);
 char **tokenize(char *str);
 
 #endif
