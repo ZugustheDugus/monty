@@ -46,6 +46,7 @@ typedef struct instruction_s
 	{"swap", op_swap},\
 	{"add", op_add},\
 	{"push", push},\
+	{"nop", nop},\
 	{NULL, NULL},\
 }
 
