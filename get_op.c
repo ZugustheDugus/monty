@@ -6,19 +6,21 @@
  * @line_num: Line Number
  * Return: Return the Operation
  */
-void (*get_op(char *s))(stack_t **head, unsigned int line_num)
+void get_op(stack_t **head, char *ction, unsigned int line_num)
 {
-	instruction_t op_code[] = {
-		{"pall", op_pall},
-		{"pint", op_pint},
-		{"pop", op_pop},
-		{"swap", op_swap},
-		{"add", op_add},
-		{NULL, NULL}
-	};
-	int i = 0;
+	int i;
+	instruction_t fun[] = OPCODES;
 
-	while (op_code[i].opcode != NULL && strcmp((op_code[i].opcode), s) != 0)
-		i++;
-	return (op_code[i].f);
+	if (ction == NULL)
+		return;
+	for (i = 0; fun[i].opcode; i++)
+	{
+		if (strcmp(fun[i].opcode, ction) == 0)
+		{
+			fun[i].f(head, line_num);
+			return;
+		}
+	}
+	fprintf(stderr, "L%d: unknown instruction %s\n", line_num, ction);
+	ag = "error";
 }

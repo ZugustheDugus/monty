@@ -3,69 +3,47 @@
  * main - main interpreter body
  * @argc: Count of Arguments
  * @argv: Arguments
- * Return: 0 if successful
+ * Return: Exit failure or exit success
  */
-int main(int argc, char **argv)
-{
-	FILE *file;
-	char str[1024], **op;
-	unsigned int i = 1;
-	void (*op_func)(stack_t **, unsigned int);
-	stack_t **head = malloc(sizeof(stack_t));
 
-	if (!head)
-		fprintf(stderr, "Error: malloc failed\n"), exit(EXIT_FAILURE);
-	if (argc != 2)
-		free(head), fprintf(stderr, "USAGE: monty file\n"), exit(EXIT_FAILURE);
-	file = fopen(argv[1], "r");
-	if (file == NULL)
+int main(int argc, char *argv[])
+{
+	size_t bsize = 1024;
+	char *buff = malloc(bsize * sizeof(char));
+	ssize_t ls;
+	FILE *f;
+	char *comm = NULL;
+	stack_t *s = NULL;
+	int xstat = EXIT_SUCCESS, lc = 1;
+
+	if (!buff)
 	{
-		free(head), fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+		free(buff), fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
-	*head = NULL;
-	while (fgets(str, sizeof(str), file) != NULL)
+	if (argc != 2)
+		fprintf(stderr, "USAGE: monty file\n"), exit(EXIT_FAILURE);
+	f = fopen(argv[1], "r");
+	if (!f)
 	{
-		if (str[strlen(str) - 1] == '\n')
-			str[strlen(str) - 1] = '\0';
-		op = tokenize(str);
-		if (op[0] == NULL)
-		{
-			free(op);
-			continue;
-		}
-		else if (strcmp(op[0], "nop") == 0)
-		{
-			free(op);
-			continue;
-		}
-		else if (strcmp(op[0], "push") == 0)
-		{
-			if (op[1] != NULL)
-				op_push(head, op[1], i);
-			else
-			{
-				if (head != NULL)
-					free_list(head), free(head);
-				else
-					free(head);
-				fclose(file), free(op);
-				fprintf(stderr, "L%d: usage: push integer\n", i);
-				exit(EXIT_FAILURE);
-			}
-		}
-		else
-		{
-			op_func = get_op(op[0]);
-			if (op_func != NULL)
-			{
-				fprintf(stderr, "L%d: unknown instruction %s\n", i, op[0]);
-				fclose(file), free_list(head), free(head), free(op);
-				exit(EXIT_FAILURE);
-			}
-		}
-		free(op), i++;
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+		exit(EXIT_FAILURE);
 	}
-	free_list(head); free(head), fclose(file);
-	return (0);
+	ls = getline(&buff, &bsize, f);
+	while (ls >= 0)
+	{
+		comm = strtok(buff, " \t\n\r");
+		ag = strtok(NULL, " \t\n\r");
+		if (ag == NULL)
+			ag = "notdigit";
+		get_op(&s, comm, lc);
+		if (strcmp(ag, "error") == 0)
+		{
+			xstat = EXIT_FAILURE;
+			break;
+		}
+		ls = getline(&buff, &bsize, f);
+		lc++;
+	}
+	free(buff), free_list(&s), fclose(f), exit(xstat);
 }
