@@ -9,5 +9,5 @@
 void nop(stack_t **head, unsigned int lc)
 {
 	(void) head;
-	(void) l;
+	(void) lc;
 }
